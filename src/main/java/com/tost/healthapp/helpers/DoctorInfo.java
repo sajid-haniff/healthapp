@@ -1,5 +1,9 @@
 package com.tost.healthapp.helpers;
 
+import com.tost.healthapp.domain.Doctor;
+
+import java.util.List;
+
 public class DoctorInfo {
 	
 	private String message;

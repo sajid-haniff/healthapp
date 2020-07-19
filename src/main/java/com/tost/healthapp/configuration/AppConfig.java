@@ -60,6 +60,7 @@ public class AppConfig {
         return transactionManager;
     }
 
+    /*
     @Bean
     public DataSourceInitializer dataSourceInitializer(final DataSource dataSource) {
         final DataSourceInitializer initializer = new DataSourceInitializer();
@@ -74,5 +75,7 @@ public class AppConfig {
         populator.addScript(dataScript);
         return populator;
     }
+
+     */
 }
 
