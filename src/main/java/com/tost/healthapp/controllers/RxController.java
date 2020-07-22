@@ -29,16 +29,22 @@ import com.tost.healthapp.services.UserService;
 public class RxController {
 	final static Logger logger = LoggerFactory.getLogger(RxController.class);
 	
-	@Autowired
+	final
 	RxService rxService;
 	
-	@Autowired
+	final
 	UserService userService;
 	
-	@Autowired
+	final
 	DoctorService docService;
-	
-	
+
+	public RxController(RxService rxService, UserService userService, DoctorService docService) {
+		this.rxService = rxService;
+		this.userService = userService;
+		this.docService = docService;
+	}
+
+
 	@GetMapping(value="/rx", produces="application/json")
 	public List<RxDTO> getRx(ModelMap model) {		
 		List<Rx> rxList = null;
