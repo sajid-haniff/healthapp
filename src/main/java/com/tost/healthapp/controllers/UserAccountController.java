@@ -108,4 +108,13 @@ public class UserAccountController {
 		model.addAttribute("message", "An email notification is sent to the registered email address.");
 		return new ModelAndView("forgotpassword", model);
 	}
+	@RequestMapping("signup/process")
+	public String processSignup(ModelMap model,
+								@RequestParam("nickname") String nickname,
+								@RequestParam("emailaddress") String emailAddress,
+								@RequestParam("password") String password) {
+		model.addAttribute("login", true);
+		model.addAttribute("nickname", nickname);
+		return "index";
+	}
 }

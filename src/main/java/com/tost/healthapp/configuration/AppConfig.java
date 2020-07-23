@@ -1,5 +1,6 @@
 package com.tost.healthapp.configuration;
 
+import com.tost.healthapp.interceptors.SignupInterceptor;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -14,6 +15,8 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.sql.DataSource;
 
@@ -21,7 +24,7 @@ import javax.sql.DataSource;
 @EntityScan("com.tost.healthapp.domain")
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
-public class AppConfig {
+public class AppConfig implements WebMvcConfigurer {
 
     @Value("${spring.datasource.driverClassName}") String driverClassName;
     @Value("${spring.datasource.url}") String url;
@@ -77,5 +80,11 @@ public class AppConfig {
     }
 
      */
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+
+        registry.addInterceptor(new SignupInterceptor()).addPathPatterns("/account/signup/process");
+    }
 }
 

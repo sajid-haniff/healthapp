@@ -28,6 +28,8 @@ public class SignupInterceptor extends HandlerInterceptorAdapter {
 		
         String emailAddress = request.getParameter("email");
         String password = request.getParameter("password");
+
+		System.out.println((emailAddress + " " + password));
         
         if(StringUtils.isEmpty(emailAddress) || StringUtils.containsWhitespace(emailAddress) ||
         		StringUtils.isEmpty(password) || StringUtils.containsWhitespace(password)) {
