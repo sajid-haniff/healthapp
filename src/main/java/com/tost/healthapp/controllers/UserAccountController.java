@@ -8,10 +8,16 @@ import com.tost.healthapp.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.Map;
@@ -24,18 +30,44 @@ public class UserAccountController {
 	
 	UserService userService;	
 	DoctorService docService;
+	AuthenticationProvider authenticationProvider;
 	
 	@Autowired
-	public UserAccountController(UserService userService, DoctorService docService) {
+	public UserAccountController(UserService userService, DoctorService docService, AuthenticationProvider provider) {
 		this.userService = userService;
 		this.docService = docService;
+		this.authenticationProvider = provider;
 	}
 	
 	@GetMapping(value="/token")
 	public Map<String, String> getToken(HttpSession session) {
 		return Collections.singletonMap("token", session.getId());
 	}
-	
+
+
+	/*
+	@PostMapping(value="/login")
+	public ExecutionStatus processLogin(@RequestBody User reqUser, HttpServletRequest request)
+	{
+		Authentication authentication = null;
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(reqUser.getEmail(), reqUser.getPassword());
+		try {
+			//
+			// Delegate authentication check to a custom Authentication provider
+			//
+			authentication = this.authenticationProvider.authenticate((token));
+			//
+			// Store the authentication object in the SecurityContextHolder
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			//User user = (User) authentication.getPrincipal();
+			//user.setPassword(null);
+			reqUser.setPassword(null);
+			return new ExecutionStatus("USER_LOIGN_SUCCESSFUL", "Login Successful!", reqUser);
+		} catch(BadCredentialsException e) {
+			return new ExecutionStatus("USER_LOGIN_UNSUCCESSFUL", "Username or password is incorrect. Please try again!");
+		}
+	}*/
+
 	@PostMapping(value="/signup")
 	public ExecutionStatus processSignup(ModelMap model, @RequestBody User reqUser) {
 		User user = null;

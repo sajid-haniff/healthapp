@@ -73,7 +73,9 @@ public class UserDAOImpl implements UserDAO {
 //		user.setPassword(persistentUser.getPassword());
 //		session.merge(user);		
 //		tx2.commit();
-		
-		
+
+		Session session = this.sessionFactory.openSession();
+		session.update(user);
+		session.clear();;
 	}
 }
